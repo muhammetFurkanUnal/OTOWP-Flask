@@ -6,19 +6,32 @@ class TagRepository:
     def __init__(self):
         self.model = Tag
         
+    def serialize(self, tagModelObject:Tag):
+        tag = {
+            "id":tagModelObject.id,
+            "name":tagModelObject.name
+        }
+        
+        return tag
+    
+        
     def getAll(self):
-        return self.model.query.all()
+        return [self.serialize(i) for i in self.model.query.all()]
+    
     
     def getByID(self, id):
-        return self.model.query.get(id)
+        return self.serialize(self.model.query.get(id))
+    
     
     def add(self, tagModelObject:Tag):
         db.session.add(tagModelObject)
         db.session.commit()
+    
         
     def update(self, tagModelObject:Tag):
         db.session.merge(tagModelObject)
         db.session.commit()
+        
         
     def delete(self, tagModelObject:Tag):
         tag = self.model.query.get(tagModelObject.id)
@@ -31,3 +44,13 @@ class TagRepository:
         db.session.delete(tag)
         db.session.commit()
             
+            
+    def getByGroupID(self, groupID):
+        # get only rows with desired groupID
+        tags = db.session.query(group_tag).filter_by(group_id=groupID).all()
+        # get only tag ids from rows
+        tags = [i[1] for i in tags]
+        tags = [self.getByID(i) for i in tags]
+        return tags
+        
+        

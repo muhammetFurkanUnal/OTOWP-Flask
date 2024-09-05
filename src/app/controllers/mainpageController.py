@@ -1,8 +1,10 @@
 from flask import Blueprint, jsonify
 from ..models import Group, Tag
+from ..services import MainpageService
 
 
 mainpageBP = Blueprint("mainpage", __name__)
+mpService = MainpageService()
 
 
 @mainpageBP.route("/mainpage")
@@ -12,21 +14,9 @@ def index():
 
 @mainpageBP.route("/groups")
 def getGroups():
-    groups = Group.query.all()
-    groups = [{
-        "id": i.id,
-        "name":i.name, 
-        } for i in groups]
-        
-    return jsonify(groups)
+    return jsonify(mpService.fetchGroups())
 
 
 @mainpageBP.route("/tags")
 def getTags():
-    tags = Tag.query.all()
-    tags = [{
-        "id": i.id,
-        "name": i.name
-    } for i in tags]
-    
-    return jsonify(tags)
+    return jsonify(mpService.fetchTags())
