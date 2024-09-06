@@ -1,4 +1,6 @@
 from ..repositories import GroupRepository, TagRepository
+from MSI import MSI 
+from threading import Thread
 
 class MainpageService:
     
@@ -21,3 +23,15 @@ class MainpageService:
         tags = self.tagRepository.getAll()
         return tags
 
+
+    def runMSI(self, request):
+        message = request["message"]
+        groups = request["groups"]
+        groups = [i["name"] for i in groups]
+        _MSI = MSI()
+        _MSI.sendMessage(message=message, groups=groups)
+        
+        
+    def getMessageForMSI(self, request):
+        Thread(target=self.runMSI, args=(request,)).start()
+        
