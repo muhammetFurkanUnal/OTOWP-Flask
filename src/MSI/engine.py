@@ -45,7 +45,7 @@ class PyWp:
             #specify where your chrome driver present in your pc
         
         self.open_browser()
-            
+ 
 
     def open_browser(self, path="https://web.whatsapp.com/"):
         self.driver = webdriver.Chrome(options=self.options)
@@ -93,8 +93,7 @@ class PyWp:
             search_box.send_keys(Keys.ENTER)
             
             time.sleep(1 if slowmode else 0.1)
-        except Exception as e:
-            print(e)
+        except:
             print("Not able to find contact ")
             return
         

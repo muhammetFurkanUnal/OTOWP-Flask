@@ -6,6 +6,7 @@ class TagRepository:
     def __init__(self):
         self.model = Tag
         
+        
     def serialize(self, tagModelObject:Tag):
         tag = {
             "id":tagModelObject.id,
@@ -18,14 +19,28 @@ class TagRepository:
     def getAll(self):
         return [self.serialize(i) for i in self.model.query.all()]
     
+    def getAllNonSerialized(self):
+        return self.model.query.all()
     
     def getByID(self, id):
         return self.serialize(self.model.query.get(id))
     
+    def getByIDNonSerialized(self, id):
+        return self.model.query.get(id)
     
-    def add(self, tagModelObject:Tag):
+    def getByName(self, name):
+        return self.serialize(self.model.query.filter_by(name=name).first())
+    
+    def getByNameNonSerialized(self, name):
+        return self.model.query.filter_by(name=name).first()
+    
+    
+    def addModel(self, tagModelObject:Tag):
         db.session.add(tagModelObject)
         db.session.commit()
+        
+    def add(self, tagName):
+        self.addModel(Tag(name=tagName))
     
         
     def update(self, tagModelObject:Tag):

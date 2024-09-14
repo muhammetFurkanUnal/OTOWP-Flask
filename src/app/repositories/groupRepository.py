@@ -20,15 +20,25 @@ class GroupRepository:
     def getAll(self):
         return [self.serialize(i) for i in self.model.query.all()]
 
-    
+    def getAllNonSerialized(self):
+        return self.model.query.all()
     
     def getByID(self, id):
         return self.serialize(self.model.query.get(id))
     
+    def getByIDNonSerialized(self, id):
+        return self.model.query.get(id)
     
-    def add(self, groupModelObject:Group):
+    
+    def addModel(self, groupModelObject:Group):
         db.session.add(groupModelObject)
         db.session.commit()
+        
+        
+    def add(self, name, tags):
+        tags = [self.tagRepo.getByNameNonSerialized(i) for i in tags]
+        groupModelObject = Group(name=name, tags=tags)
+        self.addModel(groupModelObject)
     
         
     def update(self, groupModelObject:Group):

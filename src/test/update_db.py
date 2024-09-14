@@ -34,7 +34,7 @@ def updateTest(app):
         
         # generate tags and add to db
         for tag in areas + schools + lectures:
-            tagRepository.add(Tag(name=tag))
+            tagRepository.addModel(Tag(name=tag))
             
             
         # generate groups and add to db
@@ -44,7 +44,7 @@ def updateTest(app):
             group.tags.append(tags[area])
             group.tags.append(tags[school])
             group.tags.append(tags[lecture])
-            groupRepository.add(group)
+            groupRepository.addModel(group)
           
             
 

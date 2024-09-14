@@ -9,4 +9,6 @@ class MSI:
     def sendMessage(self, message, groups):
         for group in groups:
             self.engine.send_message(group, message)
-    
+
+        
+        

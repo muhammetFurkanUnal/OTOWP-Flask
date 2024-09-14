@@ -15,10 +15,11 @@ def create_app():
     
     
     # import blueprints
-    from .controllers import mainpageBP
+    from .controllers import mainpageBP, editpageBP
     
     # register blueprints
     app.register_blueprint(mainpageBP)
+    app.register_blueprint(editpageBP)
     
     
     return app

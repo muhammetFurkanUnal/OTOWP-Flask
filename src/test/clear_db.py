@@ -6,9 +6,9 @@ def clearTest(app):
     tagRepository = TagRepository()
     groupRepository = GroupRepository()
 
-    for i in groupRepository.getAll():
+    for i in groupRepository.getAllNonSerialized():
         groupRepository.delete(i)
         
-    for i in tagRepository.getAll():
+    for i in tagRepository.getByNameNonSerialized():
         tagRepository.delete(i)
     
